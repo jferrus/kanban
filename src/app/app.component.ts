@@ -14,7 +14,7 @@ import {
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  imports: [RouterOutlet, CdkDropListGroup, CdkDropList, CdkDrag]
+  imports: [RouterOutlet, CdkDropListGroup, CdkDropList, CdkDrag, ]
 })
 export class AppComponent {
 
