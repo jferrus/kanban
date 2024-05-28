@@ -7,9 +7,6 @@ import {
   CdkDropListGroup,
   moveItemInArray,
   transferArrayItem,
-  CdkDragMove,
-  CdkDragStart,
-  CdkDragRelease,
 } from '@angular/cdk/drag-drop';
 
 @Component({
@@ -29,7 +26,7 @@ export class AppComponent {
 
   paused = ["Play videogames"]
 
-  dragging:boolean = true;
+  dragging:boolean = false;
 
   drop(event: CdkDragDrop<string[]>) {
 
