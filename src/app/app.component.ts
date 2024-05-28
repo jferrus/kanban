@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {
   CdkDragDrop,
@@ -7,6 +7,9 @@ import {
   CdkDropListGroup,
   moveItemInArray,
   transferArrayItem,
+  CdkDragMove,
+  CdkDragStart,
+  CdkDragRelease,
 } from '@angular/cdk/drag-drop';
 
 @Component({
@@ -26,7 +29,10 @@ export class AppComponent {
 
   paused = ["Play videogames"]
 
+  dragging:boolean = true;
+
   drop(event: CdkDragDrop<string[]>) {
+
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -38,4 +44,32 @@ export class AppComponent {
       );
     }
   }
+
+  dragStart() {
+    
+    this.dragging = true;
+  }
+
+  dragEnd() {
+    
+    this.dragging = false;
+  }
+
+  @HostListener('window:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) {
+    if(this.dragging == true){
+      const scrollElement = document.querySelector('.horizontal-scroll');
+      if(scrollElement){
+        const rect = scrollElement.getBoundingClientRect();
+        const offsetX = e.clientX - rect.left;
+        const shouldScroll = offsetX < rect.width * 0.1 || offsetX > rect.width * 0.9;
+      
+        if (shouldScroll) {
+          const direction = offsetX < rect.width * 0.1 ? -1 : 1;
+          scrollElement.scrollLeft += direction * 10; // adjust scroll speed here
+        }
+      }
+    }
+  }
+  
 }
